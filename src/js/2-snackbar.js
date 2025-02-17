@@ -22,23 +22,28 @@ form.addEventListener('submit', e => {
 });
 
 function createPromise(delay, isFulfilled) {
-    const promise = new Promise(() => {
+    const promise = new Promise((resolve, reject) => {
         setTimeout(() => {
             if (isFulfilled) {
-    iziToast.success({
+                resolve(''); 
+            } else {
+                reject('');
+            }
+        }, delay);
+    })
+
+    promise.then(value => {
+        iziToast.success({
     title: '✅',
         message: `Fulfilled promise in ${delay} ms`,
     icon: '',
-}); 
-            } else {
-              iziToast.error({
+});
+    })
+        .catch(value => {
+        iziToast.error({
     title: '❌',
                   message: `Rejected promise in ${delay}ms`,
     icon: '',
-});  
-            }
-           
-        }, delay);
-
+});
     })
 };

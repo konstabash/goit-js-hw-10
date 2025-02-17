@@ -18,6 +18,7 @@ const options = {
     time_24hr: true,
     defaultDate: new Date(),
     minuteIncrement: 1,
+    position: "below",
     onClose(selectedDates) {
         if (selectedDates[0] <= new Date()) {
             iziToast.error({
@@ -30,7 +31,7 @@ const options = {
         timer.userSelectedDate = selectedDates[0];
         refs.startButton.classList.add("is-active");
         refs.startButton.disabled = false;
-        refs.startButton.addEventListener("click", () => {timer.startCounting()});
+        refs.startButton.addEventListener("click", handleStartButtonClick);
     },
 };
 
@@ -42,7 +43,7 @@ const timer = {
         refs.startButton.classList.remove("is-active");
         refs.inputField.disabled = true;
         refs.startButton.disabled = true;
-        refs.startButton.removeEventListener("click", () => {timer.startCounting()});
+        refs.startButton.removeEventListener("click", handleStartButtonClick);
         this.intervalId = setInterval(() => {
     this.tick();
 }, 1000);
@@ -93,6 +94,10 @@ function addLeadingZero({ days, hours, minutes, seconds }) {
 
     return { days, hours, minutes, seconds };
 };
+
+function handleStartButtonClick() {
+    timer.startCounting();
+}
 
 
 flatpickr(refs.inputField, options);
