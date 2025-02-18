@@ -25,24 +25,26 @@ function createPromise(delay, isFulfilled) {
     const promise = new Promise((resolve, reject) => {
         setTimeout(() => {
             if (isFulfilled) {
-                resolve(''); 
+                resolve(delay); 
             } else {
-                reject('');
+                reject(delay);
             }
+           
         }, delay);
+
     })
 
     promise.then(value => {
         iziToast.success({
     title: '✅',
-        message: `Fulfilled promise in ${delay} ms`,
+        message: `Fulfilled promise in ${value} ms`,
     icon: '',
 });
     })
         .catch(value => {
         iziToast.error({
     title: '❌',
-                  message: `Rejected promise in ${delay}ms`,
+                  message: `Rejected promise in ${value}ms`,
     icon: '',
 });
     })
